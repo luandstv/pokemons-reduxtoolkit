@@ -1,5 +1,6 @@
 import { useGetPokemonsQuery } from "@/services/pokemonApi";
 import { useCallback, useRef, useState } from "react";
+import { PokemonCard } from "./PokemonCard";
 
 export function PokemonList() {
   const [offset, setOffset] = useState(0);
@@ -38,7 +39,7 @@ export function PokemonList() {
                 ref={lastPokemonElementRef}
                 key={pokemon.name}
               >
-                {pokemon.name}
+                <PokemonCard name={pokemon.name} />
               </div>
             );
           }
@@ -47,7 +48,7 @@ export function PokemonList() {
               key={pokemon.name}
               className="bg-gray-800 p-4 rounded-lg text-center capitalize transition-transform hover:scale-105"
             >
-              {pokemon.name}
+              <PokemonCard name={pokemon.name} />
             </div>
           );
         })}

@@ -38,3 +38,10 @@ export interface PokemonListResponse {
   previous: string | null;
   results: PokemonForm[];
 }
+
+export interface PokemonDetailResponse {
+  id: number;
+  name: string;
+  sprites: PokemonSprites;
+  types: PokemonTypeSlot[];
+}

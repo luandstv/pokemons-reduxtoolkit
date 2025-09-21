@@ -1,4 +1,7 @@
-import type { PokemonListResponse } from "@/types/pokemon";
+import type {
+  PokemonDetailResponse,
+  PokemonListResponse,
+} from "@/types/pokemon";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // endpoint api https://pokeapi.co/api/v2/
@@ -19,7 +22,10 @@ export const pokemonApi = createApi({
         return currentArg !== previousArg;
       },
     }),
+    getPokemonByName: builder.query<PokemonDetailResponse, string>({
+      query: (name) => `pokemon-form/${name}`,
+    }),
   }),
 });
 
-export const { useGetPokemonsQuery } = pokemonApi;
+export const { useGetPokemonsQuery, useGetPokemonByNameQuery } = pokemonApi;
