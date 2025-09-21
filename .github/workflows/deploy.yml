@@ -1,0 +1,43 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Baixa o código do repositório para a máquina virtual
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        # 2. Configura o ambiente Node.js
+      - name: Setup Node.js 🟩
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      # 3. Instala as dependências do projeto
+      - name: Install Dependencies 📦
+        run: npm ci
+      # 4. Roda o script de build para gerar os arquivos estáticos
+      - name: Build Project 🏗️
+        run: npm run build
+        # 5. Configura o ambiente do GitHub Pages
+      - name: Setup Pages ⚙️
+        uses: actions/configure-pages@v5
+        # 6. Faz o upload dos arquivos da pasta 'dist' como um artefato
+      - name: Upload Artifact ⬆️
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+      # 7. Faz o deploy final no GitHub Pages
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
