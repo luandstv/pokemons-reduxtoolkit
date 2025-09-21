@@ -55,6 +55,18 @@ O componente que renderiza a lista utiliza o hook `useGetPokemonsInfiniteQuery` 
 -   Um `observer` monitora o último item da lista.
 -   Quando o último item entra na área visível da tela, a função `fetchNextPage()` (do hook) é chamada.
 -   O RTK Query automaticamente busca os novos dados e os anexa ao cache existente, fazendo com que o componente renderize a lista atualizada.
+  
+ #### 4. Integração Contínua e Deploy (CI/CD)
+
+O projeto está configurado com um workflow de GitHub Actions (`.github/workflows/deploy.yml`) para automatizar o processo de build e deploy no GitHub Pages.
+
+- **Gatilho:** O workflow é acionado a cada `push` na branch `main`.
+- **Processo:**
+    1.  Realiza o checkout do código.
+    2.  Configura o ambiente Node.js.
+    3.  Instala as dependências de forma otimizada com `npm ci`.
+    4.  Executa o script de build (`npm run build`) para gerar os arquivos estáticos.
+    5.  Faz o deploy dos arquivos da pasta `dist` para o GitHub Pages.
 
 ## 📦 Como Executar o Projeto
 
