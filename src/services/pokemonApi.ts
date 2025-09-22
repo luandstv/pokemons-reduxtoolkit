@@ -2,12 +2,31 @@ import type {
   PokemonDetailResponse,
   PokemonListResponse,
 } from "@/types/pokemon";
+import type {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// endpoint api https://pokeapi.co/api/v2/
+const baseQuery = fetchBaseQuery({
+  baseUrl: "https://pokeapi.co/api/v2/",
+});
+
+const baseQueryWithDelay: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+  if (import.meta.env.DEV) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+  return baseQuery(args, api, extraOptions);
+};
+
 export const pokemonApi = createApi({
   reducerPath: "pokemonApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://pokeapi.co/api/v2/" }),
+  baseQuery: baseQueryWithDelay,
   endpoints: (builder) => ({
     getPokemons: builder.query<PokemonListResponse, number>({
       query: (offset = 0) => `pokemon-form?offset=${offset}&limit=20`,

@@ -29,36 +29,27 @@ export function PokemonList() {
     [isLoading, isFetching, data]
   );
   return (
-    <div>
-      <div>
+    <div className="p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
         {data?.results.map((pokemon, index) => {
           if (data.results.length === index + 1) {
             return (
-              <div
-                className="bg-gray-800 p-4 rounded-lg text-center capitalize transition-transform hover:scale-105"
-                ref={lastPokemonElementRef}
-                key={pokemon.name}
-              >
+              <div ref={lastPokemonElementRef} key={pokemon.name}>
                 <PokemonCard name={pokemon.name} />
               </div>
             );
           }
-          return (
-            <div
-              key={pokemon.name}
-              className="bg-gray-800 p-4 rounded-lg text-center capitalize transition-transform hover:scale-105"
-            >
-              <PokemonCard name={pokemon.name} />
-            </div>
-          );
+          return <PokemonCard name={pokemon.name} />;
         })}
       </div>
 
       {isFetching && (
-        <p className="text-center mt-4">Carregando mais Pokémon...</p>
+        <p className="text-center mt-4 text-muted-foreground">
+          Carregando mais Pokémon...
+        </p>
       )}
       {error && (
-        <p className="text-center mt-4 text-red-500">Ocorreu um erro!</p>
+        <p className="text-center mt-4 text-destructive">Ocorreu um erro!</p>
       )}
     </div>
   );
